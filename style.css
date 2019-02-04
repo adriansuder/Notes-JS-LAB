@@ -1,0 +1,78 @@
+body{
+    background: #696e9e;
+}
+.sticker{
+    background: #fff;
+    min-height: 100px;
+    min-width: 100px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    border: 1px solid gray;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5 );
+    padding-top: 20px;
+
+}
+.sticker .bar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    background: gray;
+    width: 100%;
+}
+
+.sticker textarea {
+    padding: 3px 10px;
+    box-sizing: border-box;
+    min-height: 100px;
+    min-width: 100px;
+    background: transparent;
+    border: none;
+}
+
+.sticker .bar:hover {
+    cursor: move;
+}
+
+.addNoteButton{
+    position: fixed;
+    top: 25px;
+    right: 25px;
+}
+
+.sticker .bar:hover{
+    cursor: move;
+    background: #9ff;
+}
+.sticker:hover{
+    z-index:1;
+}
+.deleteBtn,
+.saveBtn {
+  border: none;
+  position: absolute;
+  top: 2px;
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  right: 5px;
+  background: transparent;
+  color: red;
+}
+.deleteBtn::before{
+    content: "\f2ed";
+    font-family: "Font Awesome 5 Free";
+}
+.saveBtn::before{
+    content: "\f0c7";
+    font-family: "Font Awesome 5 Free";
+}
+.saveBtn {
+    background: transparent;
+  left: 5px;
+  color: green;
+}
