@@ -101,6 +101,7 @@ textarea.title1{
   height: 15px;
   width: 15px;
   cursor: pointer;
+  top: 6px;
 }
 .colorButton{
     width: 12px;
@@ -109,7 +110,7 @@ textarea.title1{
     border: none;
     position: absolute;
     right: 5px;
-    top: 3px;
+    top: 7px;
     cursor: pointer;
 }
 #color1{

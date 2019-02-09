@@ -60,7 +60,7 @@ createNote = function (options) {
     textareaEl.classList.add('stickerText')
     let dateEl = document.createElement('label')
     dateEl.classList.add('dateEl')
-    let temp = 400
+    let temp = 600
     let noteOptions = options || {
         content: '',
         title1: '',
