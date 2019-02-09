@@ -29,15 +29,18 @@ onDragEnd = function () {
 }
 
 getNoteObj = function(element){
-    let textarea = element.querySelector('textarea')
+    let textarea = element.querySelector('.stickerText')
+    let titleTemp = element.querySelector('textarea.title1')
     return {
+        title1: titleTemp.value, 
         content: textarea.value,
         id: element.id,
         transformCSSValue: element.style.transform,
         textarea:{
             width: textarea.style.width, height: textarea.style.height,
         },
-        background: element.style.background 
+        background: element.style.background
+        
     }
 }
 onAddNote = function(){
@@ -49,13 +52,24 @@ createNote = function (options) {
     stickerEl.classList.add('sticker')
     let barEl = document.createElement('div')
     barEl.classList.add('bar')
+    let titleEl = document.createElement('div')
+    titleEl.classList.add('title1')
+    let textTitle = document.createElement('textarea')
+    textTitle.classList.add('title1')
     let textareaEl = document.createElement('textarea')
+    textareaEl.classList.add('stickerText')
+    let dateEl = document.createElement('label')
+    dateEl.classList.add('dateEl')
     let temp = 400
     let noteOptions = options || {
         content: '',
+        title1: '',
         transformCSSValue: "translateX(" + Math.random() * temp + "px) translateY(" + Math.random() * temp + "px)",
         id: "id_" + new Date().getTime(),
-        background: "yellowgreen"
+        background: "yellowgreen",
+        placeholder: "Tutaj wpisz swoją notatkę! :)",
+        titlePlaceholder: "Tytuł notatki",
+        date: (new Date().getHours()+":"+new Date().getMinutes())
     }
 
     let saveBtn = document.createElement('button')
@@ -75,9 +89,6 @@ createNote = function (options) {
     let color4 = document.createElement('button')
     color4.classList.add('colorButton')
     color4.setAttribute("id","color4")
-    let color5 = document.createElement('button')
-    color5.classList.add('colorButton')
-    color5.setAttribute("id","color5")
 
     if (noteOptions.textarea) {
         textareaEl.style.width = noteOptions.textarea.width
@@ -91,11 +102,19 @@ createNote = function (options) {
     let onSave = function(){
         saveNote(getNoteObj(stickerEl))
     }
+    let onChangeColor = function(){
+        changeColor(getNoteObj(stickerEl))
+    }
+    
 
     stickerEl.style.transform = noteOptions.transformCSSValue
     stickerEl.id = noteOptions.id
-    textareaEl.value = noteOptions.content
     stickerEl.style.background = noteOptions.background
+    textareaEl.value = noteOptions.content
+    textTitle.value = noteOptions.title1
+    textareaEl.placeholder = noteOptions.placeholder
+    textTitle.placeholder = noteOptions.titlePlaceholder
+    dateEl.textContent = noteOptions.date
 
     saveBtn.addEventListener('click', onSave,false)
     deleteBtn.addEventListener('click',onDelete,false)
@@ -105,10 +124,13 @@ createNote = function (options) {
     barEl.appendChild(color2)
     barEl.appendChild(color3)
     barEl.appendChild(color4)
-    barEl.appendChild(color5)
     stickerEl.appendChild(barEl)
+    stickerEl.appendChild(titleEl)
+    titleEl.appendChild(textTitle)
     stickerEl.appendChild(textareaEl)
+    barEl.appendChild(dateEl)
     stickerEl.addEventListener('mousedown', onDragStart, false)
+    color1.addEventListener('click', onChangeColor, false)
     document.body.appendChild(stickerEl)
 }
 
@@ -131,6 +153,9 @@ main = function () {
             let savedNotes = JSON.parse(localStorage.getItem(localStorage.key(i)))
         createNote(savedNotes)
         }
+    }
+    changeColor = function(note){
+        note.style.background = "blue"
     }
     
     addNoteButton = document.querySelector('.addNoteButton')

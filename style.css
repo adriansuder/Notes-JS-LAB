@@ -2,8 +2,8 @@ body{
     background: #007d86;
 }
 .sticker{
-    min-height: 100px;
-    min-width: 130px;
+    min-height: 150px;
+    min-width: 180px;
     position: absolute;
     left: 20px;
     top: 20px;
@@ -16,18 +16,42 @@ body{
     position: absolute;
     top: 0;
     left: 0;
-    height: 20px;
+    height: 30px;
     background: transparent;
     width: 100%;
 }
+.sticker .title1{
+    top: 0;
+    left: 0;
+    height: 30px;
+    background: transparent;
+    width: 100%;
+}
+textarea.title1{
+    margin-top: 30px;
+    min-height: 30px;
+    border: none;
+}
 
-.sticker textarea {
-    padding: 3px 10px;
+.sticker, .stickerText  {
+    padding: 3px 20px;
+    margin-top: 40px;
+    top: 20px;
     box-sizing: border-box;
-    min-height: 100px;
-    min-width: 100px;
+    min-height: 130px;
+    min-width: 130px;
     background: transparent;
     border: none;
+}
+.dateEl{
+    height: 30px;
+    width:100%;
+    margin: 0 auto;
+    background:transparent;
+    position: absolute;
+    top: 2px;
+    left: 40%;
+    z-index:-1;
 }
 
 .sticker .bar:hover {
@@ -93,7 +117,7 @@ body{
     right: 5px;
 }
 #color2{
-    background: red;
+    background: yellowgreen;
     right: 23px;
 }
 #color3{
@@ -104,10 +128,7 @@ body{
     background: orange;
     right: 59px;
 }
-#color5{
-    background: yellowgreen;
-    right: 77px;
-}
+
 .deleteBtn {
   left: 25px;
   background: transparent;
