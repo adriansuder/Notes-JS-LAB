@@ -1,10 +1,9 @@
 body{
-    background: #696e9e;
+    background: #007d86;
 }
 .sticker{
-    background: #fff;
     min-height: 100px;
-    min-width: 100px;
+    min-width: 130px;
     position: absolute;
     left: 20px;
     top: 20px;
@@ -18,7 +17,7 @@ body{
     top: 0;
     left: 0;
     height: 20px;
-    background: gray;
+    background: transparent;
     width: 100%;
 }
 
@@ -36,14 +35,31 @@ body{
 }
 
 .addNoteButton{
-    position: fixed;
     top: 25px;
-    right: 25px;
 }
 .clearNotesButton{
+    top: 95px;
+}
+.loadNotesButton{
+    top: 165px;
+}
+.button{
     position: fixed;
-    top: 60px;
     right: 25px;
+    width: 180px;
+    height: 50px;
+    background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    border: none;
+    color: white;
+    border-radius: 2px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5)
+}
+.button:hover{
+    width: 190px;
+    height: 55px;
+    right: 20px;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(141deg, #829b90 0%, #15daf0 51%, #1dc3ff 75%);
 }
 
 .sticker .bar:hover{
@@ -54,7 +70,7 @@ body{
     z-index:1;
 }
 .deleteBtn,
-.saveBtn {
+.saveBtn{
   border: none;
   position: absolute;
   top: 2px;
@@ -62,9 +78,38 @@ body{
   width: 15px;
   cursor: pointer;
 }
-
+.colorButton{
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    border: none;
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    cursor: pointer;
+}
+#color1{
+    background: blue;
+    right: 5px;
+}
+#color2{
+    background: red;
+    right: 23px;
+}
+#color3{
+    background: yellow;
+    right: 41px;
+}
+#color4{
+    background: orange;
+    right: 59px;
+}
+#color5{
+    background: yellowgreen;
+    right: 77px;
+}
 .deleteBtn {
-  right: 5px;
+  left: 25px;
   background: transparent;
   color: red;
 }

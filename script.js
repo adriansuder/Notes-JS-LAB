@@ -36,7 +36,8 @@ getNoteObj = function(element){
         transformCSSValue: element.style.transform,
         textarea:{
             width: textarea.style.width, height: textarea.style.height,
-        }
+        },
+        background: element.style.background 
     }
 }
 onAddNote = function(){
@@ -45,20 +46,39 @@ onAddNote = function(){
 
 createNote = function (options) {
     let stickerEl = document.createElement('div')
+    stickerEl.classList.add('sticker')
     let barEl = document.createElement('div')
+    barEl.classList.add('bar')
     let textareaEl = document.createElement('textarea')
     let temp = 400
     let noteOptions = options || {
         content: '',
         transformCSSValue: "translateX(" + Math.random() * temp + "px) translateY(" + Math.random() * temp + "px)",
-        id: "id_" + new Date().getTime()
+        id: "id_" + new Date().getTime(),
+        background: "yellowgreen"
     }
 
-    barEl.classList.add('bar')
-    stickerEl.classList.add('sticker')
-
     let saveBtn = document.createElement('button')
+    saveBtn.classList.add('saveBtn')
     let deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('deleteBtn')
+
+    let color1 = document.createElement('button')
+    color1.classList.add('colorButton')
+    color1.setAttribute("id","color1")
+    let color2 = document.createElement('button')
+    color2.setAttribute("id","color2")
+    color2.classList.add('colorButton')
+    let color3 = document.createElement('button')
+    color3.classList.add('colorButton')
+    color3.setAttribute("id","color3")
+    let color4 = document.createElement('button')
+    color4.classList.add('colorButton')
+    color4.setAttribute("id","color4")
+    let color5 = document.createElement('button')
+    color5.classList.add('colorButton')
+    color5.setAttribute("id","color5")
+
     if (noteOptions.textarea) {
         textareaEl.style.width = noteOptions.textarea.width
         textareaEl.style.height = noteOptions.textarea.height
@@ -75,12 +95,17 @@ createNote = function (options) {
     stickerEl.style.transform = noteOptions.transformCSSValue
     stickerEl.id = noteOptions.id
     textareaEl.value = noteOptions.content
+    stickerEl.style.background = noteOptions.background
+
     saveBtn.addEventListener('click', onSave,false)
     deleteBtn.addEventListener('click',onDelete,false)
     barEl.appendChild(saveBtn)
     barEl.appendChild(deleteBtn)
-    saveBtn.classList.add('saveBtn')
-    deleteBtn.classList.add('deleteBtn')
+    barEl.appendChild(color1)
+    barEl.appendChild(color2)
+    barEl.appendChild(color3)
+    barEl.appendChild(color4)
+    barEl.appendChild(color5)
     stickerEl.appendChild(barEl)
     stickerEl.appendChild(textareaEl)
     stickerEl.addEventListener('mousedown', onDragStart, false)
@@ -107,14 +132,13 @@ main = function () {
         createNote(savedNotes)
         }
     }
-    loadNotes()
     
     addNoteButton = document.querySelector('.addNoteButton')
     addNoteButton.addEventListener('click', onAddNote,false)
-
+    let loadNotesButton = document.querySelector('.loadNotesButton')
+    loadNotesButton.addEventListener('click', loadNotes,false)
     document.addEventListener('mousemove', onDrag, false)
     document.addEventListener('mouseup', onDragEnd, false)
-
     clearNotesBtn = document.querySelector('.clearNotesButton')
     clearNotesBtn.addEventListener('click', clearNotes, false)
 }
