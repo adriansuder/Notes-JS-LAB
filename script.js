@@ -69,7 +69,7 @@ createNote = function (options) {
         background: "yellowgreen",
         placeholder: "Tutaj wpisz swoją notatkę! :)",
         titlePlaceholder: "Tytuł notatki",
-        date: (new Date().getHours()+":"+new Date().getMinutes())
+        date: new Date().toTimeString().split(' ')[0]
     }
 
     let saveBtn = document.createElement('button')
