@@ -1,19 +1,18 @@
-
-let draggedEl, onDragStart, onDrag, onDragEnd, grabPointY, grabPointX, addNoteButton, createNote, init, saveNote, deleteNote, loadNotes
+let onDragStart, draggedEl, createNote, onDrag, onDragEnd, getNoteObj, grabPointX, onAddNote, grabPointY, main, clearNotes, clearNotesBtn, saveNote, deleteNote, loadNotes, addNoteButton
 
 onDragStart = function (e) {
-    let boundClientRect
+    let boundingClientRect
     if (e.target.className.indexOf('bar') === -1) {
         return
     }
     draggedEl = this
-    boundClientRect = draggedEl.getBoundingClientRect()
-    grabPointY = boundClientRect.top - e.clientY
-    grabPointX = boundClientRect.left - e.clientX
+    boundingClientRect = draggedEl.getBoundingClientRect()
+    grabPointY = boundingClientRect.top - e.clientY
+    grabPointX = boundingClientRect.left - e.clientX
 }
 
 onDrag = function (e) {
-    if (!draggedEl) { return; }
+    if (!draggedEl) { return }
     let posX = e.clientX + grabPointX
     let posY = e.clientY + grabPointY
 
@@ -34,35 +33,50 @@ getNoteObj = function(element){
     return {
         content: textarea.value,
         id: element.id,
-        transformCSSValue: element.style.transform
+        transformCSSValue: element.style.transform,
+        textarea:{
+            width: textarea.style.width, height: textarea.style.height,
+        }
     }
+}
+onAddNote = function(){
+    createNote()
 }
 
 createNote = function (options) {
     let stickerEl = document.createElement('div')
     let barEl = document.createElement('div')
     let textareaEl = document.createElement('textarea')
+    let temp = 400
     let noteOptions = options || {
         content: '',
-        id: "id" + new Date().getTime(),
-        transformCSSValue: "translateX(" + Math.random() * 400 + "px) translateY(" + Math.random() * 400 + "px)"
+        transformCSSValue: "translateX(" + Math.random() * temp + "px) translateY(" + Math.random() * temp + "px)",
+        id: "id_" + new Date().getTime()
     }
+
     barEl.classList.add('bar')
     stickerEl.classList.add('sticker')
-    console.log(options)
+
     let saveBtn = document.createElement('button')
     let deleteBtn = document.createElement('button')
+    if (noteOptions.textarea) {
+        textareaEl.style.width = noteOptions.textarea.width
+        textareaEl.style.height = noteOptions.textarea.height
+        textareaEl.style.resize = 'none'
+    }
     let onDelete = function(){
-        let object = {}
-        deleteNote(object)
+        deleteNote(getNoteObj(stickerEl))
+        document.body.removeChild(stickerEl)
     }
     let onSave = function(){
-        //let object = {}
         saveNote(getNoteObj(stickerEl))
     }
-    let transformCSSValue = noteOptions.transformCSSValue
-    saveBtn.addEventListener('click', onSave)
-    deleteBtn.addEventListener('click',onDelete)
+
+    stickerEl.style.transform = noteOptions.transformCSSValue
+    stickerEl.id = noteOptions.id
+    textareaEl.value = noteOptions.content
+    saveBtn.addEventListener('click', onSave,false)
+    deleteBtn.addEventListener('click',onDelete,false)
     barEl.appendChild(saveBtn)
     barEl.appendChild(deleteBtn)
     saveBtn.classList.add('saveBtn')
@@ -73,26 +87,35 @@ createNote = function (options) {
     document.body.appendChild(stickerEl)
 }
 
-let onAddNote = function(){
-    createNote()
+//usuwanie wszystkich notatek
+clearNotes = function(){
+    Array.from(document.querySelectorAll('.sticker')).forEach(el => el.remove());
+    localStorage.clear()
 }
-init = function () {
+
+main = function () {
     saveNote= function(note){
-        localStorage.setItem(note.id, note)
+        localStorage.setItem(note.id, JSON.stringify(note))
+        console.log(localStorage.setItem(note.id, JSON.stringify(note)))
     }
     deleteNote = function(note){
-
+        localStorage.removeItem(note.id)
     }
     loadNotes = function(){
-
+        for(let i = 0; i < localStorage.length; i++) {
+            let savedNotes = JSON.parse(localStorage.getItem(localStorage.key(i)))
+        createNote(savedNotes)
+        }
     }
     loadNotes()
+    
     addNoteButton = document.querySelector('.addNoteButton')
     addNoteButton.addEventListener('click', onAddNote,false)
+
     document.addEventListener('mousemove', onDrag, false)
     document.addEventListener('mouseup', onDragEnd, false)
+
+    clearNotesBtn = document.querySelector('.clearNotesButton')
+    clearNotesBtn.addEventListener('click', clearNotes, false)
 }
-init()
-
-
-//document.querySelector('.sticker').addEventListener('mousedown', onDragStart, false)
+main()

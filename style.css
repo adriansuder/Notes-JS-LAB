@@ -40,6 +40,11 @@ body{
     top: 25px;
     right: 25px;
 }
+.clearNotesButton{
+    position: fixed;
+    top: 60px;
+    right: 25px;
+}
 
 .sticker .bar:hover{
     cursor: move;
