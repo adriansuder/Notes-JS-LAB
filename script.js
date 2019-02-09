@@ -16,9 +16,6 @@ onDrag = function (e) {
     let posX = e.clientX + grabPointX
     let posY = e.clientY + grabPointY
 
-    if (posX < 0) { posX = 0 }
-    if (posY < 0) { posY = 0 }
-
     draggedEl.style.transform = "translateX(" + posX + "px) translateY(" + posY + "px"
 }
 
@@ -39,13 +36,13 @@ getNoteObj = function(element){
         textarea:{
             width: textarea.style.width, height: textarea.style.height,
         },
-        background: element.style.background
+        background: element.style.background,
+        titleBackground: titleTemp.background,
+        textBackground: textarea.background
         
     }
 }
-onAddNote = function(){
-    createNote()
-}
+
 
 createNote = function (options) {
     let stickerEl = document.createElement('div')
@@ -60,7 +57,7 @@ createNote = function (options) {
     textareaEl.classList.add('stickerText')
     let dateEl = document.createElement('label')
     dateEl.classList.add('dateEl')
-    let temp = 600
+    let temp = 300
     let noteOptions = options || {
         content: '',
         title1: '',
@@ -102,14 +99,32 @@ createNote = function (options) {
     let onSave = function(){
         saveNote(getNoteObj(stickerEl))
     }
-    let onChangeColor = function(){
-        changeColor(getNoteObj(stickerEl))
+    let onColorChange1 = function(){
+        stickerEl.style.background = "blue",
+        textareaEl.style.color = "white"
+        textTitle.style.color = "white"
     }
-    
+    let onColorChange2 = function(){
+        stickerEl.style.background = "yellowgreen",
+        textareaEl.style.color = "white"
+        textTitle.style.color = "white"
+    }
+    let onColorChange3 = function(){
+        stickerEl.style.background = "yellow",
+        textareaEl.style.color = "black"
+        textTitle.style.color = "black"
+    }
+    let onColorChange4 = function(){
+        stickerEl.style.background = "orange",
+        textareaEl.style.color = "black"
+        textTitle.style.color = "black"
+    }
 
     stickerEl.style.transform = noteOptions.transformCSSValue
     stickerEl.id = noteOptions.id
     stickerEl.style.background = noteOptions.background
+    textareaEl.color = noteOptions.textBackground
+    textTitle.color = noteOptions.titleBackground
     textareaEl.value = noteOptions.content
     textTitle.value = noteOptions.title1
     textareaEl.placeholder = noteOptions.placeholder
@@ -130,8 +145,15 @@ createNote = function (options) {
     stickerEl.appendChild(textareaEl)
     barEl.appendChild(dateEl)
     stickerEl.addEventListener('mousedown', onDragStart, false)
-    color1.addEventListener('click', onChangeColor, false)
     document.body.appendChild(stickerEl)
+    let colorClick1 = document.querySelector('#color1')
+    colorClick1.addEventListener('click',onColorChange1, false)
+    let colorClick2 = document.querySelector('#color2')
+    colorClick2.addEventListener('click',onColorChange2, false)
+    let colorClick3 = document.querySelector('#color3')
+    colorClick3.addEventListener('click',onColorChange3, false)
+    let colorClick4 = document.querySelector('#color4')
+    colorClick4.addEventListener('click',onColorChange4, false)
 }
 
 //usuwanie wszystkich notatek
@@ -139,7 +161,9 @@ clearNotes = function(){
     Array.from(document.querySelectorAll('.sticker')).forEach(el => el.remove());
     localStorage.clear()
 }
-
+onAddNote = function(){
+    createNote()
+}
 main = function () {
     saveNote= function(note){
         localStorage.setItem(note.id, JSON.stringify(note))
@@ -148,14 +172,12 @@ main = function () {
     deleteNote = function(note){
         localStorage.removeItem(note.id)
     }
+    
     loadNotes = function(){
         for(let i = 0; i < localStorage.length; i++) {
             let savedNotes = JSON.parse(localStorage.getItem(localStorage.key(i)))
         createNote(savedNotes)
         }
-    }
-    changeColor = function(note){
-        note.style.background = "blue"
     }
     
     addNoteButton = document.querySelector('.addNoteButton')
@@ -167,4 +189,5 @@ main = function () {
     clearNotesBtn = document.querySelector('.clearNotesButton')
     clearNotesBtn.addEventListener('click', clearNotes, false)
 }
+
 main()

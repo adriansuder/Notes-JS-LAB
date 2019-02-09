@@ -1,6 +1,7 @@
 body{
     background: #007d86;
 }
+html, body {margin: 0; height: 100%; overflow: hidden}
 .sticker{
     min-height: 150px;
     min-width: 180px;
