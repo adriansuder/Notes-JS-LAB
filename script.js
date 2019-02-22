@@ -1,5 +1,5 @@
 let onDragStart, draggedEl, createNote, onDrag, onDragEnd, getNoteObj, grabPointX, onAddNote, grabPointY, main, clearNotes, clearNotesBtn, saveNote, deleteNote, loadNotes, addNoteButton
-
+//porusz notatką, tylko gdy jest ona złapana i posiada klasę bar
 onDragStart = function (e) {
     let boundingClientRect
     if (e.target.className.indexOf('bar') === -1) {
@@ -10,7 +10,7 @@ onDragStart = function (e) {
     grabPointY = boundingClientRect.top - e.clientY
     grabPointX = boundingClientRect.left - e.clientX
 }
-
+//wywołanie funkcji poruszania notatki
 onDrag = function (e) {
     if (!draggedEl) { return }
     let posX = e.clientX + grabPointX
@@ -18,13 +18,13 @@ onDrag = function (e) {
 
     draggedEl.style.transform = "translateX(" + posX + "px) translateY(" + posY + "px"
 }
-
+//"puszczanie" notatki
 onDragEnd = function () {
     draggedEl = null
     grabPointX = null
     grabPointY = null
 }
-
+//pobieranie notatek
 getNoteObj = function(element){
     let textarea = element.querySelector('.stickerText')
     let titleTemp = element.querySelector('textarea.title1')
@@ -43,7 +43,7 @@ getNoteObj = function(element){
     }
 }
 
-
+//tworzenie notatek
 createNote = function (options) {
     let stickerEl = document.createElement('div')
     stickerEl.classList.add('sticker')
@@ -164,6 +164,7 @@ clearNotes = function(){
 onAddNote = function(){
     createNote()
 }
+//zapisywanie, kasowanie, wczytywanie notatek z local storage
 main = function () {
     saveNote= function(note){
         localStorage.setItem(note.id, JSON.stringify(note))
